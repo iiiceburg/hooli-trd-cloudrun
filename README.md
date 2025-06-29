@@ -8,7 +8,6 @@ Ensure you have the following installed:
 
 - [Google Cloud SDK](https://cloud.google.com/sdk/docs/install)
 - [Terraform](https://www.terraform.io/downloads.html)
-- [Tofu](https://github.com/iiiceburg/tofu) (for Terraform wrapper)
 
 ## Setup
 
@@ -37,6 +36,17 @@ Ensure you have the following installed:
    tofu apply "tfplan"
    ```
 
+## Autoscaling
+
+The Cloud Run service is configured to autoscale based on traffic load with the following settings:
+
+- **Minimum instances:** 2  
+- **Maximum instances:** 4  
+
+This means the service will always have at least 2 instances running and can scale up to a maximum of 4 instances automatically to handle increased traffic. This configuration ensures efficient resource usage and responsiveness.
+
+You can adjust these limits in the `cloudrun.tf` Terraform configuration under the `scaling` block.
+
 ## Updating the Cloud Run Service
 
 To update the Cloud Run service (e.g., deploying a new container image):
@@ -54,7 +64,7 @@ To update the Cloud Run service (e.g., deploying a new container image):
 
 ## Notes
 
-- The `cloudrun.tf` file defines the Cloud Run service, including the container image and traffic configuration.
+- The `cloudrun.tf` file defines the Cloud Run service, including the container image, resource limits, and autoscaling configuration.
 - Ensure that the container image is updated in the Terraform configuration before applying changes.
 - For more advanced configurations, refer to the [Terraform Google Cloud Run documentation](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_v2_service).
 
